@@ -2,11 +2,9 @@ DROP TABLE IF EXISTS Department;
 DROP TABLE IF EXISTS Office;
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Building;
-DROP LOGIN IF EXISTS adminXXXX;
-DROP LOGIN IF EXISTS apiXXXX;
 GO
 
-CREATE LOGIN adminXXXX WITH PASSWORD = 'password1'; 
+/* CREATE LOGIN adminXXXX WITH PASSWORD = 'password1'; 
 CREATE USER adminXXXX FOR LOGIN adminXXXX; 
 CREATE LOGIN apiXXXX WITH PASSWORD = 'password1'; 
 CREATE USER apiXXXX FOR LOGIN apiXXXX;
@@ -16,17 +14,20 @@ EXEC sp_addrolemember 'adminXXXX', 'db_owner';
 EXEC sp_addrolemember 'apiXXXX', 'db_datareader'; 
 EXEC sp_addrolemember 'apiXXXX', 'db_datawriter';
 GO
+*/
 
 CREATE TABLE Building (
     BuildingCode NVARCHAR(4),
     Description NVARCHAR(200) NOT NULL,
     PRIMARY KEY (BuildingCode)
 );
+
 CREATE TABLE Department (
     DeptCode NVARCHAR(5),
     DeptName NVARCHAR(500) NOT NULL,
     PRIMARY KEY (DeptCode)
 );
+
 CREATE TABLE Office (
     BuildingCode NVARCHAR(4),
     OfficeNo INT,
@@ -35,7 +36,7 @@ CREATE TABLE Office (
     CONSTRAINT CHK_NumDesks CHECK(NumDesks < 5),
     PRIMARY KEY (BuildingCode, OfficeNo),
     FOREIGN KEY (BuildingCode) REFERENCES Building (BuildingCode)
-)
+);
 CREATE TABLE Employee (
     EmpID INT,
     FirstName NVARCHAR(50) NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE Employee (
     PRIMARY KEY (EmpID),
     CONSTRAINT CHK_At CHECK(Email in ('@')),
     FOREIGN KEY (BuildingCode, OfficeNo) REFERENCES Office
-)
+);
 GO
 
 DROP VIEW IF EXISTS EmployeesByDept;
@@ -74,5 +75,5 @@ GO
 
 INSERT INTO Building
 (BuildingCode, Description)
-Values (N'DGGP', N'Dod & Gy Google Plex')
+Values (N'DGGP', N'Dod & Gy Google Plex');
 GO
