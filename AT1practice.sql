@@ -1,10 +1,12 @@
-DROP TABLE IF EXISTS Department;
-DROP TABLE IF EXISTS Office;
-DROP TABLE IF EXISTS Employee;
-DROP TABLE IF EXISTS Building;
-GO
+USE master;
+DROP DATABASE IF EXISTS AT1Prac;
+CREATE DATABASE AT1Prac;
+USE AT1Prac;
 
-/* CREATE LOGIN adminXXXX WITH PASSWORD = 'password1'; 
+/* DROP LOGIN adminXXXX;
+DROP LOGIN apiXXXX;
+
+CREATE LOGIN adminXXXX WITH PASSWORD = 'password1'; 
 CREATE USER adminXXXX FOR LOGIN adminXXXX; 
 CREATE LOGIN apiXXXX WITH PASSWORD = 'password1'; 
 CREATE USER apiXXXX FOR LOGIN apiXXXX;
@@ -13,8 +15,13 @@ GO
 EXEC sp_addrolemember 'adminXXXX', 'db_owner'; 
 EXEC sp_addrolemember 'apiXXXX', 'db_datareader'; 
 EXEC sp_addrolemember 'apiXXXX', 'db_datawriter';
+GO */
+
+DROP TABLE IF EXISTS Department;
+DROP TABLE IF EXISTS Office;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Building;
 GO
-*/
 
 CREATE TABLE Building (
     BuildingCode NVARCHAR(4),
