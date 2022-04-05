@@ -2,6 +2,18 @@ DROP TABLE IF EXISTS Department;
 DROP TABLE IF EXISTS Office;
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Building;
+GO
+
+CREATE LOGIN adminXXXX WITH PASSWORD = 'password1'; 
+CREATE USER adminXXXX FOR LOGIN adminXXXX; 
+CREATE LOGIN apiXXXX WITH PASSWORD = 'password1'; 
+CREATE USER apiXXXX FOR LOGIN apiXXXX;
+GO
+ 
+EXEC sp_addrolemember 'adminXXXX', 'db_owner'; 
+EXEC sp_addrolemember 'apiXXXX', 'db_datareader'; 
+EXEC sp_addrolemember 'apiXXXX', 'db_datawriter';
+GO
 
 CREATE TABLE Building (
     BuildingCode NVARCHAR(4),
@@ -38,7 +50,7 @@ GO
 
 DROP VIEW IF EXISTS EmployeesByDept;
 DROP VIEW IF EXISTS BuildingDeskNumbers;
-
+GO
 CREATE VIEW EmployeesByDept AS
 SELECT E.Surname, E.FirstName, D.DeptName
 FROM Employee E
@@ -50,12 +62,12 @@ ORDER BY Surname
 GO
 
 CREATE VIEW BuildingDeskNumbers AS
-SELECT O.BuildingCode, Sum(O.NumDesks)
+SELECT O.BuildingCode, Sum(O.NumDesks) AS Desks
 FROM Office O
 GROUP BY O.BuildingCode
 GO
 SELECT * FROM BuildingDeskNumbers
-ORDER BY SUM(O.NumDesks) ASC
+ORDER BY Desks ASC
 GO
 
 INSERT INTO Building
